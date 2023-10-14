@@ -1,11 +1,14 @@
 package handler
 
 import (
+	"log"
 	"net/http"
 	"onden-backend/api/models"
+	"os"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 )
 
@@ -29,15 +32,20 @@ func Login (c echo.Context) error {
 }
 
 func generateJWTToken(userID string) (string, error) {
-	// シークレットキーを設定
-	secretKey := "your_secret_key" // 実際のアプリケーションでは、安全な方法でキーを管理してください
-	// トークンの有効期限を設定
-	expirationTime := time.Now().Add(24 * time.Hour)
+
+	err := godotenv.Load();
+	if err != nil {
+		log.Fatal("Error Loading .env");
+		return "", err;
+	}
+	secretKey := os.Getenv("SECRET_KEY");
+
+	expirationTime := time.Now().Add(24 * time.Hour);
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user_id": userID,
 		"exp":     expirationTime.Unix(),
 	})
 
-	return token.SignedString([]byte(secretKey))
+	return token.SignedString([]byte(secretKey));
 }
