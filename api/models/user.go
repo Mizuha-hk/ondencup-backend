@@ -3,6 +3,7 @@ package models
 import (
 	"errors"
 	"onden-backend/db"
+	"onden-backend/services"
 )
 
 type User struct {
@@ -14,7 +15,12 @@ type User struct {
 func GetUserByNameAndPassword(name, password string) (*User, error) {
 	var user User;
 
-	result := db.DB.Where("name = ? AND password = ?", name, password).First(&user);
+	hashedPassword, err := services.HashPassword(password);
+	if(err != nil) {
+		return nil, err;
+	}
+
+	result := db.DB.Where("name = ? AND password = ?", name, hashedPassword).First(&user);
 
 	if result.Error != nil {
 		return nil, errors.New("invalid credentials");
