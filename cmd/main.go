@@ -1,4 +1,4 @@
-package cmd
+package main
 
 import (
 	"log"
@@ -6,6 +6,7 @@ import (
 	"onden-backend/api/router"
 	"onden-backend/config"
 	"onden-backend/db"
+	"onden-backend/services"
 
 	"github.com/labstack/echo/v4"
 )
@@ -25,6 +26,10 @@ func main() {
 	if err := db.DB.AutoMigrate(&models.Room{}); err != nil {
 		log.Fatalf("Failed to migrate the database: %v", err);
 	}
+
+	services.HashInit(&config.Hash);
+
+	services.AuthInit(&config.JWT);
 
 	e := echo.New();
 
