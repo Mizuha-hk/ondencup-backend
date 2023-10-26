@@ -15,9 +15,9 @@ func AuthInit(config *config.JWTConfig) {
 
 func GenerateJWTToken(userId string) (string, error){
 	secret_key := jwtConfig.SecretKey;
-	expirationTime := time.Now().Add(24 * time.Hour);
+	expirationTime := time.Now().UTC().Add(24 * time.Hour);
 
-	token := jwt.NewWithClaims(jwt.SigningMethodRS256, jwt.MapClaims{
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user_id": userId,
 		"exp": expirationTime.Unix(),
 	});
