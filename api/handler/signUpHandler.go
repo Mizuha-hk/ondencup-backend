@@ -58,5 +58,5 @@ func SignUp(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err);
 	}
 
-	return c.JSON(http.StatusCreated, token);
+	return c.JSON(http.StatusCreated, map[string]string{"token":token});
 }
