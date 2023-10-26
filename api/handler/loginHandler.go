@@ -1,10 +1,10 @@
 package handler
 
 import (
-	"log"
 	"net/http"
 	"onden-backend/api/models"
 	"onden-backend/services"
+
 	"github.com/labstack/echo/v4"
 )
 
