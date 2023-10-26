@@ -1,7 +1,6 @@
 package models
 
 import (
-	"errors"
 	"onden-backend/db"
 	"onden-backend/services"
 )
@@ -23,7 +22,7 @@ func GetUserByNameAndPassword(name, password string) (*User, error) {
 	result := db.DB.Where("name = ? AND password = ?", name, hashedPassword).First(&user);
 
 	if result.Error != nil {
-		return nil, errors.New("invalid credentials");
+		return nil, result.Error;
 	}
 	return &user, nil;
 }
