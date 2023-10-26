@@ -9,10 +9,20 @@ import (
 type Config struct {
 	Server ServerConfig
 	Database DatabaseConfig
+    Hash HashConfig
+    JWT JWTConfig
 }
 
 type ServerConfig struct {
 	Port string
+}
+
+type HashConfig struct {
+    Key string
+}
+
+type JWTConfig struct {
+    SecretKey string
 }
 
 type DatabaseConfig struct {
@@ -32,6 +42,12 @@ func GetConfig() Config {
     return Config {
         Server: ServerConfig{
             Port: os.Getenv("SERVER_PORT"),
+        },
+        Hash: HashConfig{
+            Key: os.Getenv("HASH_KEY"),
+        },
+        JWT: JWTConfig{
+            SecretKey: os.Getenv("JWT_SECRET_KEY"),
         },
         Database: DatabaseConfig{
             DBUserName: os.Getenv("DB_USER"),

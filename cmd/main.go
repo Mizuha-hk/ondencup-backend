@@ -6,12 +6,17 @@ import (
 	"onden-backend/api/router"
 	"onden-backend/config"
 	"onden-backend/db"
+	"onden-backend/services"
 
 	"github.com/labstack/echo/v4"
 )
 
 func main() {
 	config := config.GetConfig();
+	
+	services.HashInit(&config.Hash);
+	
+	services.AuthInit(&config.JWT);
 	
 	var err error;
 	db.DB, err = db.Connect(config.Database);

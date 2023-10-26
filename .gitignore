@@ -1,2 +1,7 @@
 .env
 main
+bing.md
+*.key
+*.key.pub
+key.data
+temp.txt
