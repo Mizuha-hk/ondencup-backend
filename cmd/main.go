@@ -14,6 +14,10 @@ import (
 func main() {
 	config := config.GetConfig();
 	
+	services.HashInit(&config.Hash);
+	
+	services.AuthInit(&config.JWT);
+	
 	var err error;
 	db.DB, err = db.Connect(config.Database);
 	if err != nil {
@@ -26,10 +30,6 @@ func main() {
 	if err := db.DB.AutoMigrate(&models.Room{}); err != nil {
 		log.Fatalf("Failed to migrate the database: %v", err);
 	}
-
-	services.HashInit(&config.Hash);
-
-	services.AuthInit(&config.JWT);
 
 	e := echo.New();
 
