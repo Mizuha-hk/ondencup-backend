@@ -20,4 +20,4 @@ services:
     healthcheck:
       test: "mysqladmin ping -h localhost"
       interval: 5s
-      retries: 20
+      retries: 40

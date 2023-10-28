@@ -58,5 +58,10 @@ func SignUp(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err);
 	}
 
+	cookie := new(http.Cookie);
+	cookie.Name = "token";
+	cookie.Value = token;
+	c.SetCookie(cookie);
+
 	return c.JSON(http.StatusCreated, map[string]string{"token":token});
 }

@@ -4,17 +4,20 @@ import (
 	"onden-backend/api/handler"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
-func SetupRouter(e *echo.Echo){
-	api := e.Group("/api");
+func SetupAuthRouter(e *echo.Echo){
+	authRouter := e.Group("/auth");
 
-	api.POST("/login", handler.Login);
-	api.POST("/signUp", handler.SignUp);
+	authRouter.POST("/login", handler.Login);
+	authRouter.POST("/sign-up", handler.SignUp);
+}
 
-	api.POST("/user", handler.CreateUser);
-	api.GET("/user/:id", handler.GetUserById);
-	api.GET("/user", handler.GetAllUsers);
-	api.PUT("/user/:id", handler.UpdateUser);
-	api.DELETE("/user/:id", handler.DeleteUser);
+// 引数を増やしてミドルウェアを適応する。
+func SetupRoomRouter(e *echo.Echo, configJWT middleware.JWTConfig) *echo.Group {
+	commonRouter := e.Group("/api")
+	commonRouter.Use(middleware.JWTWithConfig(configJWT)) // JWTミドルウェアの設定を適用
+	commonRouter.GET("/room/:offset", handler.GetRooms)
+	return commonRouter
 }
