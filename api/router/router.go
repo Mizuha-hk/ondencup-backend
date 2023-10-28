@@ -7,20 +7,17 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-var AuthRouter *echo.Group;
-var CommonRouter *echo.Group;
-
 func SetupAuthRouter(e *echo.Echo){
-	AuthRouter = e.Group("/auth");
+	authRouter := e.Group("/auth");
 
-	AuthRouter.POST("/login", handler.Login);
-	AuthRouter.POST("/sign-up", handler.SignUp);
+	authRouter.POST("/login", handler.Login);
+	authRouter.POST("/sign-up", handler.SignUp);
 }
 
 // 引数を増やしてミドルウェアを適応する。
 func SetupRoomRouter(e *echo.Echo, configJWT middleware.JWTConfig) *echo.Group {
-	CommonRouter := e.Group("/api")
-	CommonRouter.Use(middleware.JWTWithConfig(configJWT)) // JWTミドルウェアの設定を適用
-	CommonRouter.GET("/room", handler.GetAllRooms)
-	return CommonRouter
+	commonRouter := e.Group("/api")
+	commonRouter.Use(middleware.JWTWithConfig(configJWT)) // JWTミドルウェアの設定を適用
+	commonRouter.GET("/room/:offset", handler.GetRooms)
+	return commonRouter
 }
