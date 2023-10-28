@@ -8,9 +8,14 @@ import (
 )
 
 func GetAllRooms(c echo.Context) error {
-	user := c.Get("user").(*jwt.Token);
-	claims := user.Claims.(jwt.MapClaims);
-	userId := claims["user_id"].(string);
+	user := c.Get("user")
+	if user == nil {
+		return c.JSON(http.StatusUnauthorized, "token is missing")
+	}
 
-	return c.JSON(http.StatusOK, map[string]string{"message":userId});
+	token := user.(*jwt.Token)
+	claims := token.Claims.(jwt.MapClaims)
+	userId := claims["user_id"].(string)
+
+	return c.JSON(http.StatusOK, map[string]string{"userId": userId})
 }
