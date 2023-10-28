@@ -20,6 +20,8 @@ func SetupRoomRouter(e *echo.Echo, configJWT middleware.JWTConfig) *echo.Group {
 	commonRouter.GET("/room/offset/:offset", handler.GetRooms);
 	commonRouter.GET("/room/id/:id", handler.GetRoomById);
 	commonRouter.GET("/room/finish/:id", handler.MakeFinished);
+	
+	commonRouter.GET("/user/name", handler.GetUserName);
 	return commonRouter
 }
 
