@@ -15,5 +15,5 @@ func GetUserName(c echo.Context) error {
 	var userObj models.User;
 	db.DB.Where("id = ?", userId).First(&userObj)
 
-	return c.JSON(200, userObj.Name);
+	return c.JSON(200, map[string]string{"user_name": userObj.Name});
 }
