@@ -22,3 +22,9 @@ func SetupRoomRouter(e *echo.Echo, configJWT middleware.JWTConfig) *echo.Group {
 	commonRouter.GET("/room/finish/:id", handler.MakeFinished);
 	return commonRouter
 }
+
+func SetupWebSocketRouter(e *echo.Echo, configJWT middleware.JWTConfig) {
+	e.Use(middleware.JWTWithConfig(configJWT));
+	e.GET("/ws", handler.WsConnectHandler);
+	e.DELETE("/disconnect", handler.WsDisconnectHandler);
+}
