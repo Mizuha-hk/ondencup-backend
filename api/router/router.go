@@ -18,6 +18,7 @@ func SetupAuthRouter(e *echo.Echo){
 func SetupRoomRouter(e *echo.Echo, configJWT middleware.JWTConfig) *echo.Group {
 	commonRouter := e.Group("/api")
 	commonRouter.Use(middleware.JWTWithConfig(configJWT)) // JWTミドルウェアの設定を適用
-	commonRouter.GET("/room/:offset", handler.GetRooms)
+	commonRouter.GET("/room/offset/:offset", handler.GetRooms);
+	commonRouter.GET("/room/id/:id", handler.GetRoomById);
 	return commonRouter
 }
