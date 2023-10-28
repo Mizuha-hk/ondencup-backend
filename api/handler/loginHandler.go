@@ -24,5 +24,10 @@ func Login (c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message":"Could not generate Token"});
 	}
 
+	cookie := new(http.Cookie);
+	cookie.Name = "token";
+	cookie.Value = token;
+	c.SetCookie(cookie);
+
 	return c.JSON(http.StatusOK, map[string]string{"token":token});
 }
