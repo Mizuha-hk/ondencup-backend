@@ -4,6 +4,7 @@ import (
 	"errors" // 追加
 	"fmt"    // 追加
 	"log"
+	"net/http"
 	"onden-backend/api/models"
 	"onden-backend/api/router"
 	"onden-backend/config"
@@ -61,8 +62,10 @@ func main() {
 		},
 	}
 
-	// ミドルウェアの引数を渡してRouterを生成
 	router.SetupRoomRouter(e, configJWT)
+	e.GET("/health-check", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, "healthy");
+	});
 
-	e.Start(":" + config.Server.Port)
+	e.Start(":" + config.Server.Port);
 }
