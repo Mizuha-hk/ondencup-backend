@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"onden-backend/api/models"
 	"onden-backend/api/router"
 	"onden-backend/config"
@@ -29,6 +30,10 @@ func main() {
 	e := echo.New();
 
 	router.SetupRouter(e);
+
+	e.GET("/health-check", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, "healthy");
+	});
 
 	e.Start(":" + config.Server.Port);
 }
