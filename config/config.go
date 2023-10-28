@@ -26,7 +26,7 @@ type DatabaseConfig struct {
 func GetConfig() Config {
     err := godotenv.Load(".env");
     if err != nil {
-        panic("Error loading .env file");
+        // panic("Error loading .env file");
     }
 
     return Config {
