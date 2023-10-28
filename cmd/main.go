@@ -4,6 +4,7 @@ import (
 	"errors" // 追加
 	"fmt"    // 追加
 	"log"
+	"net/http"
 	"onden-backend/api/models"
 	"onden-backend/api/router"
 	"onden-backend/config"
@@ -37,6 +38,11 @@ func main() {
 
 	e := echo.New()
 	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
+	}))
 
 	router.SetupAuthRouter(e)
 
@@ -61,8 +67,8 @@ func main() {
 		},
 	}
 
-	// ミドルウェアの引数を渡してRouterを生成
-	router.SetupRoomRouter(e, configJWT)
+	router.SetupRoomRouter(e, configJWT);
+	router.SetupWebSocketRouter(e , configJWT);
 
 	e.Start(":" + config.Server.Port)
 }
