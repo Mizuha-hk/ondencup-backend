@@ -20,11 +20,14 @@ func SetupRoomRouter(e *echo.Echo, configJWT middleware.JWTConfig) *echo.Group {
 	commonRouter.GET("/room/offset/:offset", handler.GetRooms);
 	commonRouter.GET("/room/id/:id", handler.GetRoomById);
 	commonRouter.GET("/room/finish/:id", handler.MakeFinished);
+	
+	commonRouter.GET("/user/name", handler.GetUserName);
 	return commonRouter
 }
 
 func SetupWebSocketRouter(e *echo.Echo, configJWT middleware.JWTConfig) {
-	e.Use(middleware.JWTWithConfig(configJWT));
-	e.GET("/ws", handler.WsConnectHandler);
-	e.DELETE("/disconnect", handler.WsDisconnectHandler);
+	router := e.Group("/ws");
+	router.Use(middleware.JWTWithConfig(configJWT));
+	router.GET("/", handler.WsConnectHandler);
+	router.DELETE("/disconnect", handler.WsDisconnectHandler);
 }
