@@ -8,7 +8,9 @@ import (
 	"onden-backend/db"
 	"onden-backend/services"
 
+	echojwt "github.com/labstack/echo-jwt"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
@@ -32,8 +34,16 @@ func main() {
 	}
 
 	e := echo.New();
-
-	router.SetupRouter(e);
+	
+	router.SetupAuthRouter(e);
+	router.SetupRoomRouter(e);
+	
+	e.Use(middleware.Logger());
+	
+	router.CommonRouter.Use(echojwt.WithConfig(echojwt.Config{
+		SigningKey: []byte(config.JWT.SecretKey),
+		TokenLookup: "cookie:token", 
+	}));
 
 	e.Start(":" + config.Server.Port);
 }
