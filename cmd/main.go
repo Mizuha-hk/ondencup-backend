@@ -67,8 +67,11 @@ func main() {
 		},
 	}
 
-	router.SetupRoomRouter(e, configJWT);
 	router.SetupWebSocketRouter(e , configJWT);
+	router.SetupRoomRouter(e, configJWT)
+	e.GET("/health-check", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, "healthy");
+	});
 
-	e.Start(":" + config.Server.Port)
+	e.Start(":" + config.Server.Port);
 }
