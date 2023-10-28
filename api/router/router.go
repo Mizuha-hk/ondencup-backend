@@ -6,15 +6,18 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func SetupRouter(e *echo.Echo){
-	api := e.Group("/api");
+var AuthRouter *echo.Group;
+var CommonRouter *echo.Group;
 
-	api.POST("/login", handler.Login);
-	api.POST("/signUp", handler.SignUp);
+func SetupAuthRouter(e *echo.Echo){
+	AuthRouter = e.Group("/auth");
 
-	api.POST("/user", handler.CreateUser);
-	api.GET("/user/:id", handler.GetUserById);
-	api.GET("/user", handler.GetAllUsers);
-	api.PUT("/user/:id", handler.UpdateUser);
-	api.DELETE("/user/:id", handler.DeleteUser);
+	AuthRouter.POST("/login", handler.Login);
+	AuthRouter.POST("/sign-up", handler.SignUp);
+}
+
+func SetupRoomRouter(e *echo.Echo){
+	CommonRouter = e.Group("/api");
+	
+	CommonRouter.GET("/room", handler.GetAllRooms);
 }
