@@ -14,11 +14,11 @@ func SetupAuthRouter(e *echo.Echo){
 	authRouter.POST("/sign-up", handler.SignUp);
 }
 
-// 引数を増やしてミドルウェアを適応する。
 func SetupRoomRouter(e *echo.Echo, configJWT middleware.JWTConfig) *echo.Group {
 	commonRouter := e.Group("/api")
 	commonRouter.Use(middleware.JWTWithConfig(configJWT)) // JWTミドルウェアの設定を適用
 	commonRouter.GET("/room/offset/:offset", handler.GetRooms);
 	commonRouter.GET("/room/id/:id", handler.GetRoomById);
+	commonRouter.GET("/room/finish/:id", handler.MakeFinished);
 	return commonRouter
 }
