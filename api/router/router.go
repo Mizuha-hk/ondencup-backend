@@ -22,6 +22,8 @@ func SetupRoomRouter(e *echo.Echo, configJWT middleware.JWTConfig) *echo.Group {
 	commonRouter.GET("/room/finish/:id", handler.MakeFinished);
 	
 	commonRouter.GET("/user/name", handler.GetUserName);
+
+	commonRouter.GET("/livekit/token", handler.GetLiveKitToken);
 	return commonRouter
 }
 
