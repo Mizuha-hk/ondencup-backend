@@ -12,10 +12,22 @@ require (
 )
 
 require (
+	github.com/go-jose/go-jose/v3 v3.0.0 // indirect
+	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/twitchtv/twirp v8.1.3+incompatible // indirect
+	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20231016165738-49dd2c1f3d0b // indirect
+	google.golang.org/grpc v1.59.0 // indirect
+	google.golang.org/protobuf v1.31.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
+)
+
+require (
 	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/labstack/gommon v0.4.0 // indirect
+	github.com/livekit/protocol v1.8.1
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
