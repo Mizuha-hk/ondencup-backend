@@ -3,11 +3,9 @@ module onden-backend
 go 1.21.1
 
 require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/google/uuid v1.3.1
 	github.com/gorilla/websocket v1.5.0
-	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.11.2
 	gorm.io/driver/mysql v1.5.1
 	gorm.io/gorm v1.25.4
