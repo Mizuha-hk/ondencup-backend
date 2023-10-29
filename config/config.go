@@ -2,14 +2,13 @@ package config
 
 import (
 	"os"
-
-	//"github.com/joho/godotenv"
 )
 
 type Config struct {
 	Server ServerConfig
 	Database DatabaseConfig
     Hash HashConfig
+    LiveKit LiveKitConfig
     JWT JWTConfig
 }
 
@@ -25,6 +24,11 @@ type JWTConfig struct {
     SecretKey string
 }
 
+type LiveKitConfig struct {
+    APIKey string
+    APISecret string
+}
+
 type DatabaseConfig struct {
 	DBUserName string
     DBPassword string
@@ -34,11 +38,6 @@ type DatabaseConfig struct {
 }
 
 func GetConfig() Config {
-    // err := godotenv.Load(".env");
-    // if err != nil {
-    //     panic("Error loading .env file");
-    // }
-
     return Config {
         Server: ServerConfig{
             Port: os.Getenv("SERVER_PORT"),
@@ -48,6 +47,10 @@ func GetConfig() Config {
         },
         JWT: JWTConfig{
             SecretKey: os.Getenv("JWT_SECRET_KEY"),
+        },
+        LiveKit: LiveKitConfig{
+            APIKey: os.Getenv("LIVEKIT_KEY"),
+            APISecret: os.Getenv("LIVEKIT_SECRET"),
         },
         Database: DatabaseConfig{
             DBUserName: os.Getenv("DB_USER"),
