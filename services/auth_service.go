@@ -1,10 +1,11 @@
 package services
 
 import (
+	"fmt"
 	"onden-backend/config"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt"
 )
 
 var jwtConfig *config.JWTConfig;
@@ -23,4 +24,23 @@ func GenerateJWTToken(userId string) (string, error){
 	});
 
 	return token.SignedString([]byte(secret_key));
+}
+
+func DecodeJWTToken(tokenString string) (*jwt.Token, error){
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+        if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+            return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"]);
+        }
+        return []byte(jwtConfig.SecretKey), nil
+    })
+
+    if err != nil {
+        return nil, err
+    }
+
+    if !token.Valid {
+        return nil, fmt.Errorf("invalid token")
+    }
+
+    return token, nil
 }
