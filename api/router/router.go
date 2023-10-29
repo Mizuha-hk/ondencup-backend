@@ -27,7 +27,6 @@ func SetupRoomRouter(e *echo.Echo, configJWT middleware.JWTConfig) *echo.Group {
 
 func SetupWebSocketRouter(e *echo.Echo, configJWT middleware.JWTConfig) {
 	router := e.Group("/ws");
-	router.Use(middleware.JWTWithConfig(configJWT));
-	router.GET("/", handler.WsConnectHandler);
+	router.GET("", handler.WsConnectHandler);
 	router.DELETE("/disconnect", handler.WsDisconnectHandler);
 }
