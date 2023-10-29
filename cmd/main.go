@@ -19,9 +19,11 @@ import (
 func main() {
 	config := config.GetConfig()
 
-	services.HashInit(&config.Hash)
+	services.HashInit(&config.Hash);
 
-	services.AuthInit(&config.JWT)
+	services.AuthInit(&config.JWT);
+
+	services.LiveKitInit(&config.LiveKit);
 
 	var err error
 	db.DB, err = db.Connect(config.Database)
